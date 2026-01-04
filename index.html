@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Journey | Ghibli Odyssey</title>
+    <meta name="description" content="A peaceful, Ghibli-inspired adventure game with hand-painted visuals.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&family=Gaegu:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="game-container">
+            <header>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="label">SCORE</span>
+                        <span id="score" class="value">0000</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">LIVES</span>
+                        <div id="lives" class="lives-container">
+                            <span class="life-icon"></span>
+                            <span class="life-icon"></span>
+                            <span class="life-icon"></span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">LEVEL</span>
+                        <span id="level" class="value">1</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="canvas-wrapper">
+                <div id="skillAnnouncement"></div>
+                <canvas id="gameCanvas"></canvas>
+
+                <!-- Overlays -->
+                <div id="startScreen" class="overlay active">
+                    <div class="overlay-content">
+                        <h1>FOREST<br><span class="highlight">JOURNEY</span></h1>
+                        <p class="subtitle">A peaceful stroll through the magical woods</p>
+                        <button id="startBtn" class="primary-btn" tabindex="-1">BEGIN JOURNEY</button>
+                        <div class="controls-hint">
+                            <span><kbd>←</kbd> <kbd>→</kbd> Move</span>
+                            <span><kbd>SPACE</kbd> Launch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="gameOverScreen" class="overlay">
+                    <div class="overlay-content">
+                        <h2 class="title-died">PATH LOST</h2>
+                        <div class="final-stats">
+                            <p>FINAL SCORE: <span id="finalScore">0</span></p>
+                        </div>
+                        <button id="restartBtn" class="primary-btn" tabindex="-1">TRY AGAIN</button>
+                    </div>
+                </div>
+
+                <div id="levelWinScreen" class="overlay">
+                    <div class="overlay-content">
+                        <div class="success-icon">
+                            <svg viewBox="0 0 52 52" class="checkmark">
+                                <circle cx="26" cy="26" r="25" fill="none" class="checkmark-circle" />
+                                <path fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" class="checkmark-check" />
+                            </svg>
+                        </div>
+                        <h2 class="title-win">SPIRIT AWAKENED!</h2>
+                        <p>Get ready for the next challenge.</p>
+                        <button id="nextLevelBtn" class="primary-btn" tabindex="-1">NEXT LEVEL</button>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>Designed by Antigravity AI</p>
+            </footer>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+
+</html>
