@@ -68,9 +68,36 @@ header {
     border-radius: 30px;
     padding: 10px 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    /* Spread items */
+    align-items: center;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     flex-shrink: 0;
+}
+
+.header-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid #fff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    transform: scale(1.1);
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .stats {

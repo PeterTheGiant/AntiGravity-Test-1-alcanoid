@@ -170,7 +170,7 @@ class Game {
         window.addEventListener('resize', () => this.resize());
 
         this.score = 0;
-        this.lives = 3;
+        this.lives = 5; // Updated to 5 lives
         this.level = 1;
         this.state = 'START';
         this.lastTime = 0;
@@ -233,6 +233,8 @@ class Game {
         document.getElementById('startBtn').addEventListener('click', handleButtonClick(() => this.startNewGame()));
         document.getElementById('restartBtn').addEventListener('click', handleButtonClick(() => this.startNewGame()));
         document.getElementById('nextLevelBtn').addEventListener('click', handleButtonClick(() => this.nextLevel()));
+        document.getElementById('homeBtn').addEventListener('click', handleButtonClick(() => this.resetToHome()));
+        document.getElementById('retryBtn').addEventListener('click', handleButtonClick(() => this.restartCurrentLevel()));
 
         this.initEntities();
         this.setupMobileControls();
@@ -354,8 +356,22 @@ class Game {
         }
     }
 
+    restartCurrentLevel() {
+        this.score = 0;
+        this.keys = {};
+        this.resetLevel();
+        this.hideOverlays();
+        this.state = 'PLAYING';
+        this.updateUI();
+        this.audio.playTone(440, 'sine', 0.5);
+    }
+
+    resetToHome() {
+        window.location.reload();
+    }
+
     startNewGame() {
-        this.score = 0; this.lives = 3; this.level = 1;
+        this.score = 0; this.lives = 5; this.level = 1;
         this.keys = {};
         this.resetLevel();
         this.hideOverlays();
@@ -537,6 +553,13 @@ class Game {
     }
 
     update(dt) {
+        // Always update particles for visual continuity
+        for (let i = this.particles.length - 1; i >= 0; i--) {
+            const p = this.particles[i];
+            p.update();
+            if (p.life <= 0) this.particles.splice(i, 1);
+        }
+
         if (this.state !== 'PLAYING') return;
 
         // Effects
@@ -621,12 +644,6 @@ class Game {
             }
         }
 
-        // Particles (Reverse Loop)
-        for (let i = this.particles.length - 1; i >= 0; i--) {
-            const p = this.particles[i];
-            p.update();
-            if (p.life <= 0) this.particles.splice(i, 1);
-        }
     }
 
     draw() {
