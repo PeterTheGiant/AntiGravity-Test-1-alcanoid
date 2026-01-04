@@ -85,13 +85,24 @@ header {
     border: 2px solid #fff;
     width: 44px;
     height: 44px;
+    /* Force size retention */
+    min-width: 44px;
+    min-height: 44px;
+    flex-shrink: 0;
+
     border-radius: 50%;
     cursor: pointer;
     font-size: 24px;
+    font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    /* Better Emoji Rendering */
     display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.2s;
+    line-height: 1;
+    /* Center emoji vertical alignment */
+    padding: 0;
+    /* Reset padding */
 }
 
 .icon-btn:hover {
