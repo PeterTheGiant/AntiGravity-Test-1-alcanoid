@@ -432,6 +432,38 @@ footer {
     color: rgba(0, 0, 0, 0.3);
 }
 
+/* Mobile Header Adjustments */
+@media (max-width: 600px) {
+    header {
+        padding: 8px 10px;
+        gap: 5px;
+    }
+
+    .stats {
+        gap: 15px;
+    }
+
+    .stat-item .label {
+        font-size: 10px;
+    }
+
+    .stat-item .value {
+        font-size: 18px;
+    }
+
+    .icon-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 18px;
+    }
+
+    .header-controls {
+        gap: 5px;
+    }
+}
+
 /* Mobile Controls */
 #mobile-controls {
     display: none;
