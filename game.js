@@ -240,23 +240,50 @@ class Game {
     }
 
     setupMobileControls() {
-        const bindTouch = (id, key) => {
-            const btn = document.getElementById(id);
-            if (!btn) return;
+        let lastTouchX = null;
 
-            const activate = (e) => { e.preventDefault(); this.keys[key] = true; btn.classList.add('active'); };
-            const deactivate = (e) => { e.preventDefault(); this.keys[key] = false; btn.classList.remove('active'); }; // Fixed: remove class
+        const handleTouch = (e) => {
+            e.preventDefault(); // Prevent scrolling
 
-            btn.addEventListener('touchstart', activate, { passive: false });
-            btn.addEventListener('touchend', deactivate, { passive: false });
-            btn.addEventListener('mousedown', activate); // For testing on PC with mouse
-            btn.addEventListener('mouseup', deactivate);
-            btn.addEventListener('mouseleave', deactivate);
+            // Check all active touches
+            let touchingRight = false;
+            let touchingLeft = false;
+
+            for (let i = 0; i < e.touches.length; i++) {
+                const t = e.touches[i];
+                const halfWidth = window.innerWidth / 2;
+
+                if (t.clientX > halfWidth) {
+                    // Right side: Fire
+                    touchingRight = true;
+                } else {
+                    // Left side: Move
+                    if (e.type !== 'touchend') { // Only track movement if finger is down
+                        touchingLeft = true;
+                        if (lastTouchX !== null) {
+                            const deltaX = t.clientX - lastTouchX;
+                            // Sensitivity factor (1.5x)
+                            this.paddle.x += deltaX * 1.5;
+                            // Bounds check
+                            this.paddle.x = Math.max(0, Math.min(this.canvas.width - this.paddle.width, this.paddle.x));
+                        }
+                        lastTouchX = t.clientX;
+                    }
+                }
+            }
+
+            // Update Fire State
+            this.keys['Space'] = touchingRight;
+
+            // Reset movement tracking if no fingers on left side
+            if (!touchingLeft) {
+                lastTouchX = null;
+            }
         };
 
-        bindTouch('btn-left', 'ArrowLeft');
-        bindTouch('btn-right', 'ArrowRight');
-        bindTouch('btn-fire', 'Space');
+        this.canvas.addEventListener('touchstart', handleTouch, { passive: false });
+        this.canvas.addEventListener('touchmove', handleTouch, { passive: false });
+        this.canvas.addEventListener('touchend', handleTouch, { passive: false });
     }
 
     resize() {
