@@ -293,7 +293,11 @@ class Game {
     }
 
     initEntities() {
-        const speedScale = 1 + (this.level - 1) * 0.1;
+        // Dynamic Difficulty: Check if mobile
+        const isMobile = window.innerWidth < 768 || 'ontouchstart' in window;
+        const mobileFactor = isMobile ? 0.75 : 1.0; // 25% slower on mobile
+
+        const speedScale = (1 + (this.level - 1) * 0.1) * mobileFactor;
         const sizeScale = Math.max(0.5, 1 - (this.level - 1) * 0.05);
 
         const pWidth = (this.canvas.width * 0.15) * sizeScale;
@@ -303,7 +307,7 @@ class Game {
             height: 12,
             x: (this.canvas.width - pWidth) / 2,
             y: this.canvas.height - 40,
-            speed: 10 + (this.level - 1),
+            speed: (10 + (this.level - 1)) * mobileFactor, // Paddle also slightly slower matching pace
             color: '#a0522d'
         };
 
