@@ -393,3 +393,62 @@ footer {
     font-size: 14px;
     color: rgba(0, 0, 0, 0.3);
 }
+
+/* Mobile Controls */
+#mobile-controls {
+    display: none;
+    /* Hidden by default on PC */
+}
+
+@media (pointer: coarse),
+(max-width: 768px) {
+    #mobile-controls {
+        display: flex;
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 40px;
+        z-index: 50;
+        pointer-events: none;
+        /* Allow clicks to pass through gaps */
+    }
+
+    .control-btn {
+        pointer-events: auto;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(4px);
+        color: #fff;
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        transition: transform 0.1s;
+    }
+
+    .control-btn:active,
+    .control-btn.active {
+        transform: scale(0.9);
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    .control-btn.fire {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 127, 80, 0.3);
+        /* Fireball color tint */
+        border-color: rgba(255, 127, 80, 0.6);
+        font-size: 30px;
+        margin-bottom: 20px;
+        /* Slightly higher */
+    }
+}

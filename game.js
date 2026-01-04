@@ -235,7 +235,28 @@ class Game {
         document.getElementById('nextLevelBtn').addEventListener('click', handleButtonClick(() => this.nextLevel()));
 
         this.initEntities();
+        this.setupMobileControls();
         this.requestFrame();
+    }
+
+    setupMobileControls() {
+        const bindTouch = (id, key) => {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+
+            const activate = (e) => { e.preventDefault(); this.keys[key] = true; btn.classList.add('active'); };
+            const deactivate = (e) => { e.preventDefault(); this.keys[key] = false; btn.classList.remove('active'); }; // Fixed: remove class
+
+            btn.addEventListener('touchstart', activate, { passive: false });
+            btn.addEventListener('touchend', deactivate, { passive: false });
+            btn.addEventListener('mousedown', activate); // For testing on PC with mouse
+            btn.addEventListener('mouseup', deactivate);
+            btn.addEventListener('mouseleave', deactivate);
+        };
+
+        bindTouch('btn-left', 'ArrowLeft');
+        bindTouch('btn-right', 'ArrowRight');
+        bindTouch('btn-fire', 'Space');
     }
 
     resize() {
